@@ -14,7 +14,7 @@ import reactor.core.publisher.Flux;
  * @email: chenggangpro@gmail.com
  */
 @Slf4j
-public class DefaultRequestChannelOperation implements RequestChannelOperation{
+public class DefaultRequestChannelServerOperation implements RequestChannelServerOperation {
 
     @Override
     public Flux<Payload> requestChannel(Publisher<Payload> payloads) {

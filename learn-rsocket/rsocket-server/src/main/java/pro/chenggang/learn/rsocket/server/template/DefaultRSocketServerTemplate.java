@@ -1,16 +1,16 @@
 package pro.chenggang.learn.rsocket.server.template;
 
 import lombok.extern.slf4j.Slf4j;
-import pro.chenggang.learn.rsocket.server.operation.DefaultFireAndForgetOperation;
-import pro.chenggang.learn.rsocket.server.operation.DefaultMetadataPushOperation;
-import pro.chenggang.learn.rsocket.server.operation.DefaultRequestChannelOperation;
-import pro.chenggang.learn.rsocket.server.operation.DefaultRequestResponseOperation;
-import pro.chenggang.learn.rsocket.server.operation.DefaultRequestStreamOperation;
-import pro.chenggang.learn.rsocket.server.operation.FireAndForgetOperation;
-import pro.chenggang.learn.rsocket.server.operation.MetadataPushOperation;
-import pro.chenggang.learn.rsocket.server.operation.RequestChannelOperation;
-import pro.chenggang.learn.rsocket.server.operation.RequestResponseOperation;
-import pro.chenggang.learn.rsocket.server.operation.RequestStreamOperation;
+import pro.chenggang.learn.rsocket.server.operation.DefaultFireAndForgetServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.DefaultMetadataPushServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.DefaultRequestChannelServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.DefaultRequestResponseServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.DefaultRequestStreamServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.FireAndForgetServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.MetadataPushServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.RequestChannelServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.RequestResponseServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.RequestStreamServerOperation;
 
 /**
  * @classDesc:
@@ -22,62 +22,62 @@ import pro.chenggang.learn.rsocket.server.operation.RequestStreamOperation;
 @Slf4j
 public class DefaultRSocketServerTemplate implements RSocketServerTemplate {
 
-    private final FireAndForgetOperation fireAndForgetOperation;
-    private final MetadataPushOperation metadataPushOperation;
-    private final RequestChannelOperation requestChannelOperation;
-    private final RequestResponseOperation requestResponseOperation;
-    private final RequestStreamOperation requestStreamOperation;
+    private final FireAndForgetServerOperation fireAndForgetServerOperation;
+    private final MetadataPushServerOperation metadataPushServerOperation;
+    private final RequestChannelServerOperation requestChannelServerOperation;
+    private final RequestResponseServerOperation requestResponseServerOperation;
+    private final RequestStreamServerOperation requestStreamServerOperation;
 
-    public DefaultRSocketServerTemplate(FireAndForgetOperation fireAndForgetOperation, MetadataPushOperation metadataPushOperation, RequestChannelOperation requestChannelOperation, RequestResponseOperation requestResponseOperation, RequestStreamOperation requestStreamOperation) {
-        if(null == fireAndForgetOperation){
+    public DefaultRSocketServerTemplate(FireAndForgetServerOperation fireAndForgetServerOperation, MetadataPushServerOperation metadataPushServerOperation, RequestChannelServerOperation requestChannelServerOperation, RequestResponseServerOperation requestResponseServerOperation, RequestStreamServerOperation requestStreamServerOperation) {
+        if(null == fireAndForgetServerOperation){
             log.warn("Fire And Forget Operation Is Null Init With Default");
-            fireAndForgetOperation = new DefaultFireAndForgetOperation();
+            fireAndForgetServerOperation = new DefaultFireAndForgetServerOperation();
         }
-        if(null == metadataPushOperation){
+        if(null == metadataPushServerOperation){
             log.warn("Metadata Push Operation Is Null Init With Default");
-            metadataPushOperation = new DefaultMetadataPushOperation();
+            metadataPushServerOperation = new DefaultMetadataPushServerOperation();
         }
-        if(null == requestChannelOperation){
+        if(null == requestChannelServerOperation){
             log.warn("Request Channel Operation Is Null Init With Default");
-            requestChannelOperation = new DefaultRequestChannelOperation();
+            requestChannelServerOperation = new DefaultRequestChannelServerOperation();
         }
-        if(null == requestResponseOperation){
+        if(null == requestResponseServerOperation){
             log.warn("Request Response Operation Is Null Init With Default");
-            requestResponseOperation = new DefaultRequestResponseOperation();
+            requestResponseServerOperation = new DefaultRequestResponseServerOperation();
         }
-        if(null == requestStreamOperation){
+        if(null == requestStreamServerOperation){
             log.warn("Request Stream Operation Is Null Init With Default");
-            requestStreamOperation = new DefaultRequestStreamOperation();
+            requestStreamServerOperation = new DefaultRequestStreamServerOperation();
         }
-        this.fireAndForgetOperation = fireAndForgetOperation;
-        this.metadataPushOperation = metadataPushOperation;
-        this.requestChannelOperation = requestChannelOperation;
-        this.requestResponseOperation = requestResponseOperation;
-        this.requestStreamOperation = requestStreamOperation;
+        this.fireAndForgetServerOperation = fireAndForgetServerOperation;
+        this.metadataPushServerOperation = metadataPushServerOperation;
+        this.requestChannelServerOperation = requestChannelServerOperation;
+        this.requestResponseServerOperation = requestResponseServerOperation;
+        this.requestStreamServerOperation = requestStreamServerOperation;
     }
 
     @Override
-    public FireAndForgetOperation opsForFireAndForget() {
-        return this.fireAndForgetOperation;
+    public FireAndForgetServerOperation opsForFireAndForget() {
+        return this.fireAndForgetServerOperation;
     }
 
     @Override
-    public RequestResponseOperation opsForRequestResponse() {
-        return this.requestResponseOperation;
+    public RequestResponseServerOperation opsForRequestResponse() {
+        return this.requestResponseServerOperation;
     }
 
     @Override
-    public MetadataPushOperation opsForMetadataPush() {
-        return this.metadataPushOperation;
+    public MetadataPushServerOperation opsForMetadataPush() {
+        return this.metadataPushServerOperation;
     }
 
     @Override
-    public RequestStreamOperation opsForRequestStream() {
-        return this.requestStreamOperation;
+    public RequestStreamServerOperation opsForRequestStream() {
+        return this.requestStreamServerOperation;
     }
 
     @Override
-    public RequestChannelOperation opsForRequestChannel() {
-        return this.requestChannelOperation;
+    public RequestChannelServerOperation opsForRequestChannel() {
+        return this.requestChannelServerOperation;
     }
 }

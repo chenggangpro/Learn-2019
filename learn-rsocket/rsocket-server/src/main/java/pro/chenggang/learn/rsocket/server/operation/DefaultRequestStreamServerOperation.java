@@ -7,7 +7,6 @@ import reactor.core.publisher.Flux;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.stream.Stream;
 
 /**
  * @classDesc:
@@ -17,15 +16,14 @@ import java.util.stream.Stream;
  * @email: chenggangpro@gmail.com
  */
 @Slf4j
-public class DefaultRequestStreamOperation implements RequestStreamOperation {
+public class DefaultRequestStreamServerOperation implements RequestStreamServerOperation {
 
     @Override
     public Flux<Payload> requestStream(Payload payload) {
         String payloadStr = payload.getDataUtf8();
         log.debug("DefaultRequestStreamOperation Handle Payload : {}",payloadStr);
-        return Flux
-                .fromStream(Stream.generate(()-> "DefaultRequestStreamOperation->"+payloadStr+"["+ Instant.now().toString()+"]"))
-                .delayElements(Duration.ofSeconds(1))
-                .map(DefaultPayload::create);
+        return Flux.interval(Duration.ofMillis(100))
+                .map(aLong -> DefaultPayload.create("Interval: " + aLong))
+                .map((index)->  DefaultPayload.create("DefaultRequestStreamOperation->"+payloadStr+"["+ Instant.now().toString()+"]"));
     }
 }

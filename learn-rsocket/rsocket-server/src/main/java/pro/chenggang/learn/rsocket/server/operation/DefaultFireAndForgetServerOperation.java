@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
  * @email: chenggangpro@gmail.com
  */
 @Slf4j
-public class DefaultFireAndForgetOperation implements FireAndForgetOperation {
+public class DefaultFireAndForgetServerOperation implements FireAndForgetServerOperation {
 
     @Override
     public Mono<Void> fireAndForget(Payload payload) {

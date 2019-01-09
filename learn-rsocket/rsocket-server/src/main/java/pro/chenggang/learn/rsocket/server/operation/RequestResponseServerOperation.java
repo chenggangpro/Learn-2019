@@ -1,7 +1,7 @@
 package pro.chenggang.learn.rsocket.server.operation;
 
 import io.rsocket.Payload;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * @classDesc:
@@ -10,12 +10,12 @@ import reactor.core.publisher.Flux;
  * @version: v1.0.0
  * @email: chenggangpro@gmail.com
  */
-public interface RequestStreamOperation {
+public interface RequestResponseServerOperation {
 
     /**
-     * Handle Request Stream
+     * Handle Request Response
      * @param payload
      * @return
      */
-    Flux<Payload> requestStream(Payload payload);
+    Mono<Payload> requestResponse(Payload payload);
 }

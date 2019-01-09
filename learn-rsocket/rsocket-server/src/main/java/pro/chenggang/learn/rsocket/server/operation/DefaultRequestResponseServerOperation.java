@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
  * @email: chenggangpro@gmail.com
  */
 @Slf4j
-public class DefaultRequestResponseOperation implements RequestResponseOperation {
+public class DefaultRequestResponseServerOperation implements RequestResponseServerOperation {
 
     @Override
     public Mono<Payload> requestResponse(Payload payload) {

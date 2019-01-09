@@ -2,12 +2,12 @@ package pro.chenggang.learn.rsocket.server.core;
 
 import io.rsocket.RSocketFactory;
 import io.rsocket.SocketAcceptor;
-import io.rsocket.transport.netty.server.CloseableChannel;
 import io.rsocket.transport.netty.server.TcpServerTransport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import pro.chenggang.learn.rsocket.server.properties.RSocketProperties;
+import reactor.core.Disposable;
 
 /**
  * @classDesc:
@@ -23,7 +23,7 @@ public class RSocketServerManager implements InitializingBean,DisposableBean {
 
     private final RSocketProperties rSocketProperties;
 
-    private CloseableChannel closeableChannel;
+    private Disposable subscribe;
 
     public RSocketServerManager(SocketAcceptor serverSocketAcceptor, RSocketProperties rSocketProperties) {
         this.serverSocketAcceptor = serverSocketAcceptor;
@@ -33,19 +33,19 @@ public class RSocketServerManager implements InitializingBean,DisposableBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         Integer port = rSocketProperties.getServerPort();
-        closeableChannel = RSocketFactory
+        subscribe = RSocketFactory
                 .receive()
                 .acceptor(this.serverSocketAcceptor)
                 .transport(TcpServerTransport.create(port))
                 .start()
-                .block();
+                .subscribe();
         log.debug("Start CloseableChannel On Port:{}",port);
     }
 
     @Override
     public void destroy() throws Exception {
-        if(null != closeableChannel){
-            closeableChannel.dispose();
+        if(null != subscribe){
+            subscribe.dispose();
             log.debug("Close CloseableChannel");
         }
     }

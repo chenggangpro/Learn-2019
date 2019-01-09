@@ -10,11 +10,11 @@ import reactor.core.publisher.Mono;
  * @version: v1.0.0
  * @email: chenggangpro@gmail.com
  */
-public interface FireAndForgetOperation {
+public interface MetadataPushServerOperation {
     /**
-     * Handle Fire And Forget
+     * Handle Metadata Push
      * @param payload
      * @return
      */
-    Mono<Void> fireAndForget(Payload payload);
+    Mono<Void> metadataPush(Payload payload);
 }

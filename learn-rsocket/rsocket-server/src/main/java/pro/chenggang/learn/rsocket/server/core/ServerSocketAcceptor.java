@@ -24,6 +24,8 @@ public class ServerSocketAcceptor implements SocketAcceptor {
 
     @Override
     public Mono<RSocket> accept(ConnectionSetupPayload connectionSetupPayload, RSocket rSocket) {
-        return Mono.just(rSocket);
+        return Mono.just(rSocketServer);
     }
+
+
 }

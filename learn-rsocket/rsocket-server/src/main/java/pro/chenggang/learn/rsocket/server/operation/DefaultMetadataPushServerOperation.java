@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
  * @email: chenggangpro@gmail.com
  */
 @Slf4j
-public class DefaultMetadataPushOperation implements MetadataPushOperation {
+public class DefaultMetadataPushServerOperation implements MetadataPushServerOperation {
 
     @Override
     public Mono<Void> metadataPush(Payload payload) {

@@ -21,6 +21,7 @@
 
 	<modules>
 		<module>rsocket-server</module>
+		<module>rsocket-client</module>
 	</modules>
 
 	<properties>

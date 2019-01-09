@@ -1,11 +1,11 @@
 package pro.chenggang.learn.rsocket.server.template;
 
 
-import pro.chenggang.learn.rsocket.server.operation.FireAndForgetOperation;
-import pro.chenggang.learn.rsocket.server.operation.MetadataPushOperation;
-import pro.chenggang.learn.rsocket.server.operation.RequestChannelOperation;
-import pro.chenggang.learn.rsocket.server.operation.RequestResponseOperation;
-import pro.chenggang.learn.rsocket.server.operation.RequestStreamOperation;
+import pro.chenggang.learn.rsocket.server.operation.FireAndForgetServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.MetadataPushServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.RequestChannelServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.RequestResponseServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.RequestStreamServerOperation;
 
 /**
  * @classDesc:
@@ -20,29 +20,29 @@ public interface RSocketServerTemplate {
      * Operation For Fire And Forget
      * @return
      */
-    FireAndForgetOperation opsForFireAndForget();
+    FireAndForgetServerOperation opsForFireAndForget();
 
     /**
      * Operation For Request Resposne
      * @return
      */
-    RequestResponseOperation opsForRequestResponse();
+    RequestResponseServerOperation opsForRequestResponse();
 
     /**
      * Operation For Metadata Push
      * @return
      */
-    MetadataPushOperation opsForMetadataPush();
+    MetadataPushServerOperation opsForMetadataPush();
 
     /**
      * Operation For Request Stream
      * @return
      */
-    RequestStreamOperation opsForRequestStream();
+    RequestStreamServerOperation opsForRequestStream();
 
     /**
      * Operation For Request Channel
      * @return
      */
-    RequestChannelOperation opsForRequestChannel();
+    RequestChannelServerOperation opsForRequestChannel();
 }
