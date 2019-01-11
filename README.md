@@ -4,7 +4,7 @@
 
   * [x] Request And Response 
    > `http POST http://localhost/request abc=123`
-  * [ ] Fire And Forget
+  * [x] Fire And Forget
    > `http POST http://localhost/fire abc=123`
   * [x] Channel 
    > `http --stream GET http://localhost/channel`
