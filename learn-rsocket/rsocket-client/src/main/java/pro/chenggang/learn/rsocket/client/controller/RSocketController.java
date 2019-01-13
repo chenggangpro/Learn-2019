@@ -21,7 +21,7 @@ import java.util.Map;
  * @author: chenggang
  * @createTime: 2019/1/8
  * @version: v1.0.0
- * @email: cg@choicesoft.com.cn
+ * @email: chenggangpro@gmail.com
  */
 @Slf4j
 @RestController
@@ -65,7 +65,7 @@ public class RSocketController {
     @PostMapping("/metadata")
     public Mono<String> metadataPush(@RequestBody Map<String,String> param) {
         log.debug("RSocket Controller [Metadata Push]-> {}",param);
-        this.rSocketClient.fireAndForget(DefaultPayload.create(JSON.toJSONString(param)));
+        this.rSocketClient.metadataPush(DefaultPayload.create(JSON.toJSONString(param)));
         return Mono.just("Success");
     }
 }

@@ -1,4 +1,4 @@
-package pro.chenggang.learn.rsocket.server.operation;
+package pro.chenggang.learn.rsocket.client.operation;
 
 import io.rsocket.Payload;
 import reactor.core.publisher.Mono;
@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
  * @version: v1.0.0
  * @email: chenggangpro@gmail.com
  */
-public interface FireAndForgetServerOperation {
+public interface FireAndForgetOperation {
     /**
      * Handle Fire And Forget
      * @param payload

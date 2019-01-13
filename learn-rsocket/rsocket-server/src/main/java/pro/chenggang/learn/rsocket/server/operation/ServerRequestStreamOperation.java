@@ -16,14 +16,14 @@ import java.time.Instant;
  * @email: chenggangpro@gmail.com
  */
 @Slf4j
-public class DefaultRequestStreamServerOperation implements RequestStreamServerOperation {
+public class ServerRequestStreamOperation implements RequestStreamOperation {
 
     @Override
     public Flux<Payload> requestStream(Payload payload) {
         String payloadStr = payload.getDataUtf8();
-        log.debug("DefaultRequestStreamOperation Handle Payload : {}",payloadStr);
-        return Flux.interval(Duration.ofMillis(100))
+        log.debug("ServerRequestStreamOperation Handle Payload : {}",payloadStr);
+        return Flux.interval(Duration.ofSeconds(1))
                 .map(aLong -> DefaultPayload.create("Interval: " + aLong))
-                .map((index)->  DefaultPayload.create("DefaultRequestStreamOperation->"+payloadStr+"["+ Instant.now().toString()+"]"));
+                .map((index)->  DefaultPayload.create("ServerRequestStreamOperation->"+payloadStr+"["+ Instant.now().toString()+"]"));
     }
 }

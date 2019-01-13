@@ -1,4 +1,4 @@
-package pro.chenggang.learn.rsocket.server.operation;
+package pro.chenggang.learn.rsocket.client.operation;
 
 import io.rsocket.Payload;
 import reactor.core.publisher.Mono;
@@ -10,12 +10,11 @@ import reactor.core.publisher.Mono;
  * @version: v1.0.0
  * @email: chenggangpro@gmail.com
  */
-public interface RequestResponseServerOperation {
-
+public interface MetadataPushOperation {
     /**
-     * Handle Request Response
+     * Handle Metadata Push
      * @param payload
      * @return
      */
-    Mono<Payload> requestResponse(Payload payload);
+    Mono<Void> metadataPush(Payload payload);
 }

@@ -8,19 +8,19 @@ import org.springframework.context.annotation.Configuration;
 import pro.chenggang.learn.rsocket.server.core.RSocketServer;
 import pro.chenggang.learn.rsocket.server.core.RSocketServerManager;
 import pro.chenggang.learn.rsocket.server.core.ServerSocketAcceptor;
-import pro.chenggang.learn.rsocket.server.operation.DefaultFireAndForgetServerOperation;
-import pro.chenggang.learn.rsocket.server.operation.DefaultMetadataPushServerOperation;
-import pro.chenggang.learn.rsocket.server.operation.DefaultRequestChannelServerOperation;
-import pro.chenggang.learn.rsocket.server.operation.DefaultRequestResponseServerOperation;
-import pro.chenggang.learn.rsocket.server.operation.DefaultRequestStreamServerOperation;
-import pro.chenggang.learn.rsocket.server.operation.FireAndForgetServerOperation;
-import pro.chenggang.learn.rsocket.server.operation.MetadataPushServerOperation;
-import pro.chenggang.learn.rsocket.server.operation.RequestChannelServerOperation;
-import pro.chenggang.learn.rsocket.server.operation.RequestResponseServerOperation;
-import pro.chenggang.learn.rsocket.server.operation.RequestStreamServerOperation;
+import pro.chenggang.learn.rsocket.server.operation.ServerFireAndForgetOperation;
+import pro.chenggang.learn.rsocket.server.operation.ServerMetadataPushOperation;
+import pro.chenggang.learn.rsocket.server.operation.ServerRequestChannelOperation;
+import pro.chenggang.learn.rsocket.server.operation.ServerRequestResponseOperation;
+import pro.chenggang.learn.rsocket.server.operation.ServerRequestStreamOperation;
+import pro.chenggang.learn.rsocket.server.operation.FireAndForgetOperation;
+import pro.chenggang.learn.rsocket.server.operation.MetadataPushOperation;
+import pro.chenggang.learn.rsocket.server.operation.RequestChannelOperation;
+import pro.chenggang.learn.rsocket.server.operation.RequestResponseOperation;
+import pro.chenggang.learn.rsocket.server.operation.RequestStreamOperation;
 import pro.chenggang.learn.rsocket.server.properties.RSocketProperties;
-import pro.chenggang.learn.rsocket.server.template.DefaultRSocketServerTemplate;
-import pro.chenggang.learn.rsocket.server.template.RSocketServerTemplate;
+import pro.chenggang.learn.rsocket.server.template.RSocketServerOperationTemplate;
+import pro.chenggang.learn.rsocket.server.template.RSocketOperationTemplate;
 
 /**
  * @classDesc:
@@ -38,49 +38,49 @@ public class ServerConfig {
     }
 
     @Bean
-    @ConditionalOnMissingBean(FireAndForgetServerOperation.class)
-    public FireAndForgetServerOperation fireAndForgetOperation(){
-        return new DefaultFireAndForgetServerOperation();
+    @ConditionalOnMissingBean(ServerFireAndForgetOperation.class)
+    public FireAndForgetOperation fireAndForgetOperation(){
+        return new ServerFireAndForgetOperation();
     }
 
     @Bean
-    @ConditionalOnMissingBean(MetadataPushServerOperation.class)
-    public MetadataPushServerOperation metadataPushOperation(){
-        return new DefaultMetadataPushServerOperation();
+    @ConditionalOnMissingBean(ServerMetadataPushOperation.class)
+    public MetadataPushOperation metadataPushOperation(){
+        return new ServerMetadataPushOperation();
     }
 
     @Bean
-    @ConditionalOnMissingBean(RequestChannelServerOperation.class)
-    public RequestChannelServerOperation requestChannelOperation(){
-        return new DefaultRequestChannelServerOperation();
+    @ConditionalOnMissingBean(ServerRequestChannelOperation.class)
+    public RequestChannelOperation requestChannelOperation(){
+        return new ServerRequestChannelOperation();
     }
 
     @Bean
-    @ConditionalOnMissingBean(RequestResponseServerOperation.class)
-    public RequestResponseServerOperation requestResponseOperation(){
-        return new DefaultRequestResponseServerOperation();
+    @ConditionalOnMissingBean(ServerRequestResponseOperation.class)
+    public RequestResponseOperation requestResponseOperation(){
+        return new ServerRequestResponseOperation();
     }
 
     @Bean
-    @ConditionalOnMissingBean(RequestStreamServerOperation.class)
-    public RequestStreamServerOperation requestStreamOperation(){
-        return new DefaultRequestStreamServerOperation();
+    @ConditionalOnMissingBean(ServerRequestStreamOperation.class)
+    public RequestStreamOperation requestStreamOperation(){
+        return new ServerRequestStreamOperation();
     }
 
     @Bean
-    @ConditionalOnMissingBean(RSocketServerTemplate.class)
-    public RSocketServerTemplate rSocketServerTemplate(@Autowired(required = false) FireAndForgetServerOperation fireAndForgetServerOperation,
-                                                       @Autowired(required = false) MetadataPushServerOperation metadataPushServerOperation,
-                                                       @Autowired(required = false) RequestChannelServerOperation requestChannelServerOperation,
-                                                       @Autowired(required = false) RequestResponseServerOperation requestResponseServerOperation,
-                                                       @Autowired(required = false) RequestStreamServerOperation requestStreamServerOperation){
-        return new DefaultRSocketServerTemplate(fireAndForgetServerOperation, metadataPushServerOperation, requestChannelServerOperation, requestResponseServerOperation, requestStreamServerOperation);
+    @ConditionalOnMissingBean(RSocketServerOperationTemplate.class)
+    public RSocketOperationTemplate rSocketServerOperationTemplate(@Autowired(required = false) FireAndForgetOperation fireAndForgetOperation,
+                                                          @Autowired(required = false) MetadataPushOperation metadataPushOperation,
+                                                          @Autowired(required = false) RequestChannelOperation requestChannelOperation,
+                                                          @Autowired(required = false) RequestResponseOperation requestResponseOperation,
+                                                          @Autowired(required = false) RequestStreamOperation requestStreamOperation){
+        return new RSocketServerOperationTemplate(fireAndForgetOperation, metadataPushOperation, requestChannelOperation, requestResponseOperation, requestStreamOperation);
     }
 
     @Bean
     @ConditionalOnMissingBean(RSocketServer.class)
-    public RSocketServer rSocketServer(RSocketServerTemplate rSocketServerTemplate){
-        return new RSocketServer(rSocketServerTemplate);
+    public RSocketServer rSocketServer(RSocketOperationTemplate rSocketServerOperationTemplate){
+        return new RSocketServer(rSocketServerOperationTemplate);
     }
 
     @Bean

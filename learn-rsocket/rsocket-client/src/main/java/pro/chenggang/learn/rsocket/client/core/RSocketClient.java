@@ -1,17 +1,22 @@
 package pro.chenggang.learn.rsocket.client.core;
 
+import com.alibaba.fastjson.JSON;
 import io.rsocket.AbstractRSocket;
 import io.rsocket.Payload;
 import io.rsocket.RSocket;
 import io.rsocket.RSocketFactory;
 import io.rsocket.transport.netty.client.TcpClientTransport;
+import io.rsocket.util.DefaultPayload;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.StringUtils;
 import pro.chenggang.learn.rsocket.client.properties.RSocketProperties;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.UUID;
 
 /**
  * @classDesc:
@@ -25,9 +30,11 @@ public class RSocketClient extends AbstractRSocket implements InitializingBean,D
 
     private final RSocketProperties rSocketProperties;
     private RSocket rSocket;
+    private final ClientRSocketAcceptor clientRSocketAcceptor;
 
-    public RSocketClient(RSocketProperties rSocketProperties) {
+    public RSocketClient(RSocketProperties rSocketProperties, ClientRSocketAcceptor clientRSocketAcceptor) {
         this.rSocketProperties = rSocketProperties;
+        this.clientRSocketAcceptor = clientRSocketAcceptor;
     }
 
     @Override
@@ -41,12 +48,21 @@ public class RSocketClient extends AbstractRSocket implements InitializingBean,D
     @Override
     public void afterPropertiesSet() throws Exception {
         Integer serverPort = rSocketProperties.getServerPort();
+        String clientPrefix = rSocketProperties.getClientPrefix();
+        String clientName = UUID.randomUUID().toString().replace("-","");
+        if(!StringUtils.isEmpty(clientName)){
+            clientName = clientPrefix+":"+clientName;
+        }
+        SetupPayload setupPayload = new SetupPayload();
+        setupPayload.setClientName(clientName);
         rSocket = RSocketFactory
                 .connect()
+                .setupPayload(DefaultPayload.create(JSON.toJSONString(setupPayload)))
+                .acceptor(rSocket-> this.clientRSocketAcceptor)
                 .transport(TcpClientTransport.create(serverPort))
                 .start()
                 .block();
-        log.debug("Start RScocket Client On Port:{}",serverPort);
+        log.debug("Start RScocket Client:{}, On Port:{}",clientName,serverPort);
     }
 
     @Override

@@ -2,4 +2,4 @@ spring:
   application:
     name: rsocket-client
 server:
-  port: 80
+  port: 9001

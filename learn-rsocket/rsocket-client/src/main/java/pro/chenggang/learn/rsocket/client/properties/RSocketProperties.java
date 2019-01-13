@@ -22,5 +22,9 @@ public class RSocketProperties {
      * 默认端口
      */
     private Integer serverPort = 8080;
+    /**
+     * 客户端名称前缀
+     */
+    private String clientPrefix = "default_client";
 
 }

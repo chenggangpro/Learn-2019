@@ -1,4 +1,4 @@
-package pro.chenggang.learn.rsocket.server.operation;
+package pro.chenggang.learn.rsocket.client.operation;
 
 import io.rsocket.Payload;
 import io.rsocket.util.DefaultPayload;
@@ -14,15 +14,15 @@ import reactor.core.publisher.Flux;
  * @email: chenggangpro@gmail.com
  */
 @Slf4j
-public class DefaultRequestChannelServerOperation implements RequestChannelServerOperation {
+public class ClientRequestChannelOperation implements RequestChannelOperation {
 
     @Override
     public Flux<Payload> requestChannel(Publisher<Payload> payloads) {
-        log.debug("DefaultRequestChannelOperation Handle Payload Publisher");
+        log.debug("ClientRequestChannelOperation Handle Payload Publisher");
         return Flux
                 .from(payloads)
                 .map(Payload::getDataUtf8)
-                .doOnNext(payload-> log.debug("DefaultRequestChannelOperation Handle Payload :{}",payload))
+                .doOnNext(payload-> log.debug("ClientRequestChannelOperation Handle Payload :{}",payload))
                 .map(DefaultPayload::create);
     }
 }

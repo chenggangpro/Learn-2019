@@ -1,4 +1,4 @@
-package pro.chenggang.learn.rsocket.server.operation;
+package pro.chenggang.learn.rsocket.client.operation;
 
 import io.rsocket.Payload;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +12,11 @@ import reactor.core.publisher.Mono;
  * @email: chenggangpro@gmail.com
  */
 @Slf4j
-public class DefaultMetadataPushServerOperation implements MetadataPushServerOperation {
+public class ClientMetadataPushOperation implements MetadataPushOperation {
 
     @Override
     public Mono<Void> metadataPush(Payload payload) {
-        log.debug("DefaultMetadataPushOperation Handle Payload :{}",payload);
+        log.debug("ClientMetadataPushOperation Handle Payload :{}",payload);
         return Mono.empty();
     }
 }

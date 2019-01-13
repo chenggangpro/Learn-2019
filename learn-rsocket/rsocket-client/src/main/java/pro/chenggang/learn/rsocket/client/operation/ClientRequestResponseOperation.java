@@ -1,4 +1,4 @@
-package pro.chenggang.learn.rsocket.server.operation;
+package pro.chenggang.learn.rsocket.client.operation;
 
 import io.rsocket.Payload;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +12,11 @@ import reactor.core.publisher.Mono;
  * @email: chenggangpro@gmail.com
  */
 @Slf4j
-public class DefaultRequestResponseServerOperation implements RequestResponseServerOperation {
+public class ClientRequestResponseOperation implements RequestResponseOperation {
 
     @Override
     public Mono<Payload> requestResponse(Payload payload) {
-        log.debug("DefaultRequestResponseOperation Handle Payload :{}",payload.getDataUtf8());
+        log.debug("ClientRequestResponseOperation Handle Payload :{}",payload.getDataUtf8());
         return Mono.just(payload);
     }
 }
