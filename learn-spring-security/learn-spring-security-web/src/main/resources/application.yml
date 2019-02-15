@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: web-security
+server:
+  port: 9101
