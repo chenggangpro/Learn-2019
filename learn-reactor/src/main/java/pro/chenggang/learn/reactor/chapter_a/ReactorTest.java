@@ -3,12 +3,14 @@ package pro.chenggang.learn.reactor.chapter_a;
 import org.junit.Test;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.FluxSink;
 import reactor.util.function.Tuples;
 
 import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.assertEquals;
 
@@ -60,13 +62,75 @@ public class ReactorTest {
         // 一秒钟从Flux中拿一个对象,输出
         Disposable subscribe = flux.delayElements(Duration.ofSeconds(1)).subscribe(System.out::println);
         long start = System.currentTimeMillis();
-        // 拿10秒中国
+        // 拿10秒
         while (true){
             if(System.currentTimeMillis()-start> TimeUnit.MILLISECONDS.convert(10,TimeUnit.SECONDS)){
                 break;
             }
         }
         subscribe.dispose();
+    }
+
+    @Test
+    public void testSampleSubscriber(){
+        SampleSubscriber<Integer> ss = new SampleSubscriber<Integer>();
+        Flux<Integer> ints = Flux.range(1, 4);
+        ints.subscribe((item)-> System.out.println("Outer:"+item),
+                error -> System.err.println("Error " + error),
+                () -> System.out.println("Done"),
+                s -> s.request(10));
+        ints.subscribe(ss);
+    }
+
+
+    @Test
+    public void testFibonacciWithFluxGenerate() {
+        Flux<Long> fibonacciGenerator = Flux.generate(
+                //Callable
+                () -> Tuples.of(0L, 1L),
+                //BiFunction
+                //state-->Tuples
+                (state, sink) -> {
+                    //next 指向下一个数
+                    sink.next(state.getT1());
+                    System.out.println("Generate:"+state.getT1());
+                    //返回T2 和 T1+T2
+                    return Tuples.of(state.getT2(), state.getT1() + state.getT2());
+                });
+        int size = 5;
+        fibonacciGenerator.take(size).subscribe(item -> System.out.println("Consuming:"+item));
+    }
+
+    @Test
+    public void testFibonacciWithFluxCreate() {
+    Flux<Long> fibonacciGenerator =
+        Flux.create(
+            fluxSink -> {
+              long current = 0, prev = 0;
+              AtomicBoolean stop = new AtomicBoolean(false);
+              fluxSink.onCancel(
+                  () -> {
+                    stop.set(true);
+                    System.out.println("******* Stop Received ****** ");
+                  });
+              while (current >= 0) {
+                  fluxSink.next(current);
+                  System.out.println("generated:" + current);
+                  if (current == 0) {
+                      long next = 1;
+                      prev = current;
+                      current = next;
+                  } else {
+                      long next = current + prev;
+                      prev = current;
+                      current = next;
+                  }
+              }
+              fluxSink.complete();
+            },
+            FluxSink.OverflowStrategy.IGNORE);
+        int size = 5;
+        fibonacciGenerator.take(size).subscribe(item -> System.out.println("Consuming:"+item));
     }
 
 }
